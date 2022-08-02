@@ -1,26 +1,27 @@
-const { Schema, model } = require("mongoose");
+const { Schema } = require("mongoose");
 
-const reactionsSchema = {
-  dateOfPost: {
-    type: Date,
-    required: true,
-    trim: true,
+const reactionSchema = new Schema({
+  reactionId: {
+    type: mongoose.Schema.Types.ObjectId,
+    default: new mongoose.Types.ObjectId(),
   },
-  reactionMessage: {
+  reactionBody: {
     type: String,
     required: true,
     minLength: 1,
-    maxLength: 8000,
+    maxLength: 280,
   },
-
-  friend: {
-    type: Schema.Types.ObjectId,
-    ref: "Friend",
+  username: {
+    type: String,
+    required: true,
   },
-};
+  createdAt: {
+    type: Date,
+    default: Date.now,
+    get: (date) => {
+      return moment(date).format("MMMM Do YYYY, h:mm a");
+    },
+  },
+});
 
-const schema = new Schema(reactionsSchema);
-
-const Reactions = model("Reactions", schema);
-
-module.exports = Reactions;
+module.exports = reactionSchema;
