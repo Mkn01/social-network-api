@@ -26,7 +26,25 @@ const getUserById = async (req, res) => {
   }
 };
 
+const createNewUser = (req, res) => {
+  try {
+    return res.send("createThought");
+  } catch (error) {
+    console.log(`[ERROR]: Failed to create new user | ${error.message}`);
+  }
+};
+const updateUserById = (req, res) => {
+  return res.send("updateUserById");
+};
+
+const deleteUserById = (req, res) => {
+  return res.send("deleteUserById");
+};
+
 module.exports = {
   getAllUsers,
   getUserById,
+  createNewUser,
+  updateUserById,
+  deleteUserById,
 };
