@@ -33,6 +33,19 @@ const createThought = (req, res) => {
     console.log(`[ERROR]: Failed to create new Thought | ${error.message}`);
   }
 };
+//`PUT` to update a thought by its `_id`
+
+//`DELETE` to remove a thought by its `_id`
+
+
+
+//`/api/thoughts/:thoughtId/reactions`**
+
+//`POST` to create a reaction stored in a single thought's `reactions` array field
+
+// `DELETE` to pull and remove a reaction by the reaction's `reactionId` value
+
+
 module.exports = {
   getAllThoughts,
   getThoughtsById,

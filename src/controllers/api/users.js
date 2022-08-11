@@ -34,11 +34,20 @@ const createNewUser = (req, res) => {
   }
 };
 const updateUserById = (req, res) => {
-  return res.send("updateUserById");
+  try{
+    return res.send("updateUserById");
+  } catch (error) {
+    console.log(`[ERROR]: Failed to update user | ${error.message}`);
+  
 };
 
 const deleteUserById = (req, res) => {
-  return res.send("deleteUserById");
+  try{
+    return res.send("deleteUserById");
+  }catch (error){
+    console.log(`[ERROR]: Failed to delete user | ${error.message}`);
+ }
+  
 };
 
 module.exports = {
