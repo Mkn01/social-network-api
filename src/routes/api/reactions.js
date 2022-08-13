@@ -1,15 +1,13 @@
-//to do
 const { Router } = require("express");
 
 const {
   getAllReactions,
-  getReactionById,
-  getAllThoughts,
-} = require("../../controllers/api/thoughts");
+  getReactionsById,
+} = require("../../controllers/api/reactions");
 
 const router = Router();
 
-router.get("/", getAllThoughts);
-router.get("/:id", getThoughtsById);
+router.get("/", getAllReactions);
+router.get("/:id", getReactionsById);
 
 module.exports = router;
