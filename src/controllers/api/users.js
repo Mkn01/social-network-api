@@ -1,4 +1,4 @@
-const { Users } = require("../../models");
+const { Users, User } = require("../../models");
 
 const getAllUsers = async (req, res) => {
   try {
@@ -26,9 +26,18 @@ const getUserById = async (req, res) => {
   }
 };
 
-const createNewUser = (req, res) => {
+const createNewUser = async(req, res)  => {
   try {
-    return res.send("createThought");
+    const {username, email} = req.body;
+    if (username&&email){
+      await User.create({username, email});
+      return res.json({success:true});
+
+    }else {
+      return res.status(400).json({
+        success: false,
+        error: `Please enter valid username and email`)};
+      }
   } catch (error) {
     console.log(`[ERROR]: Failed to create new user | ${error.message}`);
   }

@@ -1,0 +1,12 @@
+[
+  {
+    "thoughtText": "Thought text",
+    "username": "John",
+    "reactions": []
+  },
+  {
+    "thoughtText": "My thoughts...",
+    "username": "Alice",
+    "reactions": []
+  }
+]
