@@ -26,37 +26,36 @@ const getUserById = async (req, res) => {
   }
 };
 
-const createNewUser = async(req, res)  => {
+const createNewUser = async (req, res) => {
   try {
-    const {username, email} = req.body;
-    if (username&&email){
-      await User.create({username, email});
-      return res.json({success:true});
-
-    }else {
+    const { username, email } = req.body;
+    if (username && email) {
+      await User.create({ username, email });
+      return res.json({ success: true });
+    } else {
       return res.status(400).json({
         success: false,
-        error: `Please enter valid username and email`)};
-      }
+        error: `Please enter valid username and email`,
+      });
+    }
   } catch (error) {
     console.log(`[ERROR]: Failed to create new user | ${error.message}`);
   }
 };
 const updateUserById = (req, res) => {
-  try{
+  try {
     return res.send("updateUserById");
   } catch (error) {
     console.log(`[ERROR]: Failed to update user | ${error.message}`);
-  
+  }
 };
 
 const deleteUserById = (req, res) => {
-  try{
+  try {
     return res.send("deleteUserById");
-  }catch (error){
+  } catch (error) {
     console.log(`[ERROR]: Failed to delete user | ${error.message}`);
- }
-  
+  }
 };
 
 module.exports = {

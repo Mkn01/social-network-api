@@ -27,6 +27,25 @@ const getThoughtsById = async (req, res) => {
 };
 
 const createThought = () => {
+  try {
+    const {username,thoughtMessage} = req.body;
+    if (username && thoughtMessage) {
+      await Thought.create({username, thoughtMessage});
+      return res.json({success:true});
+    }else {
+      return res.status(400).json({
+        success:false,
+        error:`Please enter a valid message`
+      });
+
+    }
+      } catch (error) {
+        console.log(`[ERROR]: could not create new thought at this time | ${error.message} `);
+        return res.status(500).json({success:false, error: error.message})
+      }
+
+    }
+  
   // get all thought fields from payload
   // get user id from payload
   // create thought and get id of new thought
