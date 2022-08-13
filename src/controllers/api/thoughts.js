@@ -26,25 +26,23 @@ const getThoughtsById = async (req, res) => {
   }
 };
 
-const createThought = (req, res) => {
-  try {
-    return res.send("createThought");
-  } catch (error) {
-    console.log(`[ERROR]: Failed to create new Thought | ${error.message}`);
-  }
+const createThought = () => {
+  // get all thought fields from payload
+  // get user id from payload
+  // create thought and get id of new thought
+  // find user by user id
+  // push thought id to thoughts
+  // return res
 };
 //`PUT` to update a thought by its `_id`
 
 //`DELETE` to remove a thought by its `_id`
-
-
 
 //`/api/thoughts/:thoughtId/reactions`**
 
 //`POST` to create a reaction stored in a single thought's `reactions` array field
 
 // `DELETE` to pull and remove a reaction by the reaction's `reactionId` value
-
 
 module.exports = {
   getAllThoughts,
