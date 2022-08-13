@@ -45,26 +45,38 @@ const createThought = () => {
       }
 
     }
+
+    const updateThought = () => {
+      try{
+        const {id} = req.params;
+        const {username, thoughtText} = req.body;
+        if (username || thoughtText) {
+          await Thought.findByIdAndUpdate(id, {
+            username, thoughtMessage
+          });
+          return res.json({success:true});
+        }else res.status(500).json({success:false});
+      } catch (error) {
+        console.log(`[ERROR]: could not update thought at this time | ${error.message} `)
+        return res.status(500).json({success:false, error: error.message});
+      }
+      };
+
+      const deleteThought = async (req,res) => {
+        try {
+          const {id} = req.params;
+          await Thought.findByIdAndDelete(id);
+          return res.json ({success:true});
+        }catch (error) {
+          console.log(`[ERROR]: could not delete thought at thus time`)
+        }
+        };
+      
   
-  // get all thought fields from payload
-  // get user id from payload
-  // create thought and get id of new thought
-  // find user by user id
-  // push thought id to thoughts
-  // return res
-};
-//`PUT` to update a thought by its `_id`
-
-//`DELETE` to remove a thought by its `_id`
-
-//`/api/thoughts/:thoughtId/reactions`**
-
-//`POST` to create a reaction stored in a single thought's `reactions` array field
-
-// `DELETE` to pull and remove a reaction by the reaction's `reactionId` value
-
 module.exports = {
   getAllThoughts,
   getThoughtsById,
   createThought,
+  updateThought,
+  deleteThought
 };
