@@ -40,11 +40,21 @@ const createNewUser = async (req, res) => {
     }
   } catch (error) {
     console.log(`[ERROR]: Failed to create new user | ${error.message}`);
+    return res.status(500).json({ success: false, error: error.message });
   }
 };
+
 const updateUserById = (req, res) => {
   try {
-    return res.send("updateUserById");
+    const {id} = req.params;
+    const {username, email} = req.body;
+    if (username || email) {
+      await User.findByIdAndUpdate(id,{
+        username, email
+      });
+      return res.json({success:true});
+      
+    }
   } catch (error) {
     console.log(`[ERROR]: Failed to update user | ${error.message}`);
   }
