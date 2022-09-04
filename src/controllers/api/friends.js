@@ -1,4 +1,4 @@
-const { User } = require("../../models");
+const { User, Thought } = require("../../models");
 
 const createFriendFromUser = async (req, res) => {
   const { userId, friendId } = req.params;
@@ -19,9 +19,7 @@ const createFriendFromUser = async (req, res) => {
       return res.json({ success: true });
     } else res.status(500).json({ success: false });
   } catch (error) {
-    console.log(
-      `[ERROR]: Could not create new friend at this time | ${error.message}`
-    );
+    console.log(`[ERROR]: Could not create new friend | ${error.message}`);
     return res.status(500).json({ success: false, error: error.message });
   }
 };
@@ -45,11 +43,8 @@ const removeFriendFromUser = async (req, res) => {
       return res.json({ success: true });
     } else res.status(500).json({ success: false });
   } catch (error) {
-    console.log(
-      `[ERROR]: Could not add remove friend at this time | ${error.message}`
-    );
+    console.log(`[ERROR]: Could not add remove friend | ${error.message}`);
     return res.status(500).json({ success: false, error: error.message });
   }
 };
-
 module.exports = { createFriendFromUser, removeFriendFromUser };
