@@ -1,5 +1,21 @@
 const { Thought } = require("../../models");
 
+const getAllReactions = () => {
+  try {
+    res.json({ message: "To do: retrieve all reactions" });
+  } catch (error) {
+    console.error(error.message);
+  }
+};
+
+const getReactionById = () => {
+  try {
+    res.json({ message: "To do: retrieve a reaction by id" });
+  } catch (error) {
+    console.error(error.message);
+  }
+};
+
 const createReactionFromThought = async (req, res) => {
   const { id } = req.params;
   const { reactionBody, username } = req.body;
@@ -43,4 +59,9 @@ const removeReactionFromThought = async (req, res) => {
   }
 };
 
-module.exports = { createReactionFromThought, removeReactionFromThought };
+module.exports = {
+  createReactionFromThought,
+  removeReactionFromThought,
+  getAllReactions,
+  getReactionById,
+};

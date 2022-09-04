@@ -1,8 +1,8 @@
-const { Users, User } = require("../../models");
+const { User } = require("../../models");
 
 const getAllUsers = async (req, res) => {
   try {
-    const users = await Users.find({});
+    const users = await User.find({});
 
     return res.json({ data: users });
   } catch (error) {
@@ -14,7 +14,7 @@ const getUserById = async (req, res) => {
   try {
     const { id } = req.params;
 
-    const user = await Users.findById(id);
+    const user = await User.findById(id);
 
     if (!user) {
       return res.status(404).json({ success: false });
@@ -44,16 +44,16 @@ const createNewUser = async (req, res) => {
   }
 };
 
-const updateUserById = (req, res) => {
+const updateUserById = async (req, res) => {
   try {
-    const {id} = req.params;
-    const {username, email} = req.body;
+    const { id } = req.params;
+    const { username, email } = req.body;
     if (username || email) {
-      await User.findByIdAndUpdate(id,{
-        username, email
+      await User.findByIdAndUpdate(id, {
+        username,
+        email,
       });
-      return res.json({success:true});
-      
+      return res.json({ success: true });
     }
   } catch (error) {
     console.log(`[ERROR]: Failed to update user | ${error.message}`);
