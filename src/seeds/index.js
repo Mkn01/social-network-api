@@ -1,50 +1,56 @@
-require("dotenv").config();
-const { mongoose } = require("mongoose");
-const { Thought, User } = require("../models");
-const thought = require("./thought.json");
-const user = require("./user.json");
+const connectToDatabase = require("../config/connection");
 
-const thoughtsSeed = async () => {
-  await Thought.deleteMany();
-  const promises = thought.map((thought) => Thought.create(thought));
-  await Promise.all(promises);
-  console.log("Successfully seeded thoughts");
-};
+const { User, Thought } = require("../models");
 
-const userSeed = async () => {
-  await User.deleteMany();
-  const thoughtsFromDB = await Thought.find();
-  const promises = user.map(async (user) => {
-    const chooseRandomIndex = Math.floor(Math.random() * thoughtsFromDB.length);
-    user.thoughts.push(thoughtsFromDB[chooseRandomIndex]._id);
-    return User.create(user);
-  });
+const { seedUsers } = require("./users");
+const { seedThoughts } = require("./thoughts");
 
-  await Promise.all(promises);
-  console.log("Successfully seeded users");
+const clearCollections = async () => {
+  await User.deleteMany({});
+  await Thought.deleteMany({});
 };
 
 const init = async () => {
   try {
-    const DB_NAME = process.env.DB_NAME;
-    const MONGODB_URI =
-      process.env.MONGODB_URI || `mongodb://localhost:27017/${DB_NAME}`;
+    await connectToDatabase();
 
-    const options = {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    };
+    await clearCollections();
 
-    await mongoose.connect(MONGODB_URI, options);
+    await seedUsers();
 
-    console.log("[INFO]: Successfully connected to Database");
+    await seedThoughts();
 
-    await thoughtsSeed();
-    await userSeed();
+    const thoughtsFromDb = await Thought.find({});
 
-    console.log("Successfully seeded");
+    const usersFromDb = await User.find({});
+
+    const thoughtPromises = thoughtsFromDb.map(async (thought) => {
+      const username = thought.username;
+
+      const user = usersFromDb.find((user) => user.username === username);
+
+      user.thoughts.push(thought._id.toString());
+
+      await User.findByIdAndUpdate(user._id, { ...user });
+    });
+
+    const userArray = usersFromDb.map((user) => user._id);
+
+    const friendPromises = usersFromDb.map(async (user) => {
+      const randomUsers = userArray.sort(() => 0.5 - Math.random());
+      const randomArray = randomUsers.slice(
+        Math.floor(Math.random() * randomUsers.length)
+      );
+
+      const friends = randomArray.filter((userId) => userId !== user._id);
+
+      await User.findByIdAndUpdate(user._id, { friends });
+    });
+
+    await Promise.all(thoughtPromises);
+    await Promise.all(friendPromises);
   } catch (error) {
-    console.log(`[ERROR]: Could not seed | ${error.message}`);
+    console.log(`[ERROR]: Failed to seed DB | ${error.message}`);
   }
 
   process.exit(0);
