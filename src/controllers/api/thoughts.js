@@ -26,7 +26,7 @@ const getThoughtsById = async (req, res) => {
   }
 };
 
-const createThought = async () => {
+const createThought = async (req, res) => {
   try {
     const { username, thoughtMessage } = req.body;
     if (username && thoughtMessage) {
@@ -46,7 +46,7 @@ const createThought = async () => {
   }
 };
 
-const updateThought = async () => {
+const updateThought = async (req, res) => {
   try {
     const { id } = req.params;
     const { username, thoughtText } = req.body;
