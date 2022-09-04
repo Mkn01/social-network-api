@@ -12,8 +12,8 @@ const router = Router();
 
 router.get("/", getAllThoughts);
 router.get("/:id", getThoughtsById);
-router.get("/:id", createThought);
-router.get("/:id", updateThought);
-router.get("/:id", deleteThought);
+router.post("/", createThought);
+router.put("/:id", updateThought);
+router.delete("/:id", deleteThought);
 
 module.exports = router;
